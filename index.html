@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Netflix App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 로그인 전 화면 -->
+    <div id="loginSection" class="container">
+        <div class="card" style="text-align: center;">
+            <h1>Welcome</h1>
+            <p class="subtitle">프리미엄 콘텐츠를 즐기려면 로그인하세요.</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+                <button class="btn" onclick="navigateTo('login.html')">로그인</button>
+                <button class="btn"
+                    style="background: var(--glass-bg); border: 1px solid var(--primary); color: var(--text-main); box-shadow: none;"
+                    onclick="navigateTo('signup.html')">회원가입</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 로그인 후 메인 화면 (Netflix Style) -->
+    <div id="mainSection" class="hidden">
+        <nav class="navbar">
+            <div class="logo">MYFLIX</div>
+            <div class="nav-links">
+                <span style="align-self: center; color: var(--text-dim); margin-right: 1rem;"><b id="userName"
+                        style="color: white;">User</b>님</span>
+                <button class="nav-btn" onclick="handleLogout()">로그아웃</button>
+            </div>
+        </nav>
+
+        <header class="hero"
+            style="background-image: url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=1920&q=80');">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Stranger Things</h1>
+                <p>인디애나주의 작은 마을 실종된 소년. 그리고 나타난 정체불명의 소녀. 수수께끼 같은 실험과 공포가 마을을 뒤덮는다.</p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn"
+                        style="width: auto; padding: 0.8rem 2rem; background: white; color: black; box-shadow: none;">▶
+                        재생</button>
+                    <button class="btn"
+                        style="width: auto; padding: 0.8rem 2rem; background: rgba(100,100,100,0.5); color: white; border: none; box-shadow: none;">ℹ
+                        상세 정보</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="movie-section">
+            <h2 class="row-title">인기 콘텐츠</h2>
+            <div class="movie-row">
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1542204172-658a09b57c4c?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+            </div>
+
+            <h2 class="row-title" style="margin-top: 2rem;">최신 등록 콘텐츠</h2>
+            <div class="movie-row">
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1543536448-d247542f576c?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+                <div class="movie-card"><img
+                        src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=400&q=80"
+                        alt="movie"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
