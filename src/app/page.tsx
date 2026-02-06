@@ -1,44 +1,80 @@
-import Link from 'next/link';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
 
 export default function Home() {
-    // Note: Standard Next.js server component. 
-    // In a real app, logic for "isLoggedIn" would check session/cookies.
-    const isLoggedIn = false;
+    const [user, setUser] = useState<User | null>(null);
+    const [mounted, setMounted] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const router = useRouter();
 
-    if (!isLoggedIn) {
+    useEffect(() => {
+        setMounted(true);
+        const storedUser = localStorage.getItem('currentUser');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            document.body.classList.add('main-view');
+        } else {
+            document.body.classList.remove('main-view');
+        }
+
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            document.body.classList.remove('main-view');
+        };
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('currentUser');
+        setUser(null);
+        document.body.classList.remove('main-view');
+        router.refresh();
+    };
+
+    if (!mounted) return null;
+
+    if (!user) {
         return (
-            <main className="auth-body" style={{ minHeight: '100vh' }}>
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <div className="card">
-                        <h1>Welcome</h1>
-                        <p className="subtitle">프리미엄 콘텐츠를 즐기려면 로그인하세요.</p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
-                            <Link href="/login" className="btn">
-                                로그인
-                            </Link>
-                            <Link href="/signup" className="btn" style={{
-                                background: 'var(--glass-bg)',
-                                border: '1px solid var(--primary)',
-                                boxShadow: 'none'
-                            }}>
-                                회원가입
-                            </Link>
-                        </div>
+            <div className="container">
+                <div className="card" style={{ textAlign: 'center' }}>
+                    <h1>Welcome</h1>
+                    <p className="subtitle">프리미엄 콘텐츠를 즐기려면 로그인하세요.</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
+                        <button className="btn" onClick={() => router.push('/login')}>로그인</button>
+                        <button
+                            className="btn"
+                            style={{ background: 'var(--glass-bg)', border: '1px solid var(--primary)', color: 'var(--text-main)', boxShadow: 'none' }}
+                            onClick={() => router.push('/signup')}
+                        >
+                            회원가입
+                        </button>
                     </div>
                 </div>
-            </main>
+            </div>
         );
     }
 
     return (
-        <main>
-            <nav className="navbar">
+        <div id="mainSection">
+            <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="logo">MYFLIX</div>
                 <div className="nav-links">
                     <span style={{ alignSelf: 'center', color: 'var(--text-dim)', marginRight: '1rem' }}>
-                        <b style={{ color: 'white' }}>User</b>님
+                        <b id="userName" style={{ color: 'white' }}>{user.name}</b>님
                     </span>
-                    <button className="nav-btn">로그아웃</button>
+                    <button className="nav-btn" onClick={handleLogout}>로그아웃</button>
                 </div>
             </nav>
 
@@ -57,32 +93,32 @@ export default function Home() {
             <section className="movie-section">
                 <h2 className="row-title">인기 콘텐츠</h2>
                 <div className="movie-row">
-                    {[
-                        'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1542204172-658a09b57c4c?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=400&q=80'
-                    ].map((url, i) => (
-                        <div key={i} className="movie-card"><img src={url} alt="movie" /></div>
-                    ))}
+                    <MovieCard src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1542204172-658a09b57c4c?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=400&q=80" />
                 </div>
 
                 <h2 className="row-title" style={{ marginTop: '2rem' }}>최신 등록 콘텐츠</h2>
                 <div className="movie-row">
-                    {[
-                        'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1616530940355-351fabd9524b?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1543536448-d247542f576c?auto=format&fit=crop&w=400&q=80',
-                        'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=400&q=80'
-                    ].map((url, i) => (
-                        <div key={i} className="movie-card"><img src={url} alt="movie" /></div>
-                    ))}
+                    <MovieCard src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1543536448-d247542f576c?auto=format&fit=crop&w=400&q=80" />
+                    <MovieCard src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=400&q=80" />
                 </div>
             </section>
-        </main>
+        </div>
+    );
+}
+
+function MovieCard({ src }: { src: string }) {
+    return (
+        <div className="movie-card">
+            <img src={src} alt="movie" />
+        </div>
     );
 }
