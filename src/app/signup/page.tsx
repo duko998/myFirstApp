@@ -2,53 +2,49 @@ import Link from 'next/link';
 
 export default function SignupPage() {
     return (
-        <main style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            padding: '1rem'
-        }}>
-            <div className="glass-card" style={{ maxWidth: '400px', width: '100%' }}>
-                <h2 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>Create Account</h2>
-                <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontSize: '0.9rem', color: '#a5a5a5' }}>Full Name</label>
-                        <input type="text" placeholder="John Doe" style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '8px',
-                            padding: '0.75rem',
-                            color: 'white'
-                        }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontSize: '0.9rem', color: '#a5a5a5' }}>Email Address</label>
-                        <input type="email" placeholder="you@example.com" style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '8px',
-                            padding: '0.75rem',
-                            color: 'white'
-                        }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontSize: '0.9rem', color: '#a5a5a5' }}>Password</label>
-                        <input type="password" placeholder="••••••••" style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '8px',
-                            padding: '0.75rem',
-                            color: 'white'
-                        }} />
-                    </div>
-                    <button type="submit" className="btn-primary" style={{ marginTop: '1rem' }}>
-                        Get Started
-                    </button>
-                </form>
-                <p style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem', color: '#a5a5a5' }}>
-                    Already have an account? <Link href="/login" style={{ color: 'var(--primary)', fontWeight: '600' }}>Sign In</Link>
-                </p>
+        <main className="auth-body" style={{ minHeight: '100vh' }}>
+            <div className="container">
+                <div className="card">
+                    <h1>Create Account</h1>
+                    <p className="subtitle">새로운 계정을 만들고 시작해보세요.</p>
+
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="name">이름</label>
+                            <input type="text" id="name" name="name" placeholder="홍길동" required />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="email">이메일 주소</label>
+                            <input type="email" id="email" name="email" placeholder="email@example.com" required />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="password">비밀번호</label>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="confirm-password">비밀번호 확인</label>
+                            <input type="password" id="confirm-password" name="confirmPassword" placeholder="••••••••" required />
+                        </div>
+
+                        <button type="submit" className="btn">회원가입</button>
+                    </form>
+
+                    <p className="footer-text">
+                        이미 계정이 있으신가요?
+                        <Link href="/login" style={{
+                            cursor: 'pointer',
+                            color: 'var(--primary-light)',
+                            fontWeight: '600',
+                            textDecoration: 'underline',
+                            marginLeft: '0.5rem'
+                        }}>
+                            로그인
+                        </Link>
+                    </p>
+                </div>
             </div>
         </main>
     );
