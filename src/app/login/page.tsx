@@ -33,7 +33,7 @@ export default function LoginPage() {
                         }} />
                     </div>
                     <button type="submit" className="btn-primary" style={{ marginTop: '1rem' }}>
-                        Sign In
+                        Sign In!
                     </button>
                 </form>
                 <p style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem', color: '#a5a5a5' }}>
